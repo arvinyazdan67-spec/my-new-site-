@@ -1,0 +1,1966 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduX Pro | مدرسه هوشمند</title>
+
+    <style>
+        *{box-sizing:border-box}
+        body{
+            margin:0;
+            font-family:Tahoma,Arial,sans-serif;
+            background:#070b18;
+            color:#fff;
+        }
+        button,input,select{font-family:inherit}
+
+        .sidebar{
+            position:fixed;
+            right:0;
+            top:0;
+            bottom:0;
+            width:260px;
+            padding:20px;
+            background:linear-gradient(180deg,#111936,#24104d);
+            border-left:1px solid #303b61;
+            z-index:10;
+        }
+
+        .logo{
+            font-size:28px;
+            font-weight:bold;
+            text-align:center;
+            margin-bottom:25px;
+        }
+        .logo span{color:#8b5cf6}
+
+        .avatar{
+            width:70px;
+            height:70px;
+            margin:auto;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:35px;
+            background:linear-gradient(135deg,#06b6d4,#8b5cf6);
+        }
+
+        .user{text-align:center;margin-bottom:25px}
+        .user h3{margin:10px 0 4px}
+        .user small{color:#9ca3af}
+
+        .menu button{
+            width:100%;
+            padding:14px;
+            margin:4px 0;
+            border:0;
+            border-radius:12px;
+            color:#cbd5e1;
+            background:transparent;
+            text-align:right;
+            cursor:pointer;
+        }
+        .menu button:hover,
+        .menu button.active{
+            background:#7c3aed55;
+            color:#fff;
+        }
+
+        .main{
+            margin-right:260px;
+            min-height:100vh;
+        }
+
+        .top{
+            height:70px;
+            padding:0 25px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            background:#0b1020dd;
+            backdrop-filter:blur(15px);
+            border-bottom:1px solid #263451;
+            position:sticky;
+            top:0;
+            z-index:5;
+        }
+
+        .search{
+            width:300px;
+            padding:12px;
+            background:#11182b;
+            color:white;
+            border:1px solid #293653;
+            border-radius:12px;
+        }
+
+        .icon{
+            width:42px;
+            height:42px;
+            margin-right:6px;
+            border:1px solid #293653;
+            border-radius:12px;
+            background:#11182b;
+            color:#fff;
+            cursor:pointer;
+        }
+
+        .content{padding:28px}
+        .page{display:none}
+        .page.active{display:block}
+
+        .hero{
+            padding:32px;
+            border-radius:25px;
+            background:linear-gradient(135deg,#4c1d95,#2563eb);
+            box-shadow:0 20px 60px #4c1d9555;
+            margin-bottom:22px;
+        }
+
+        .hero h1{font-size:32px}
+        .hero p{line-height:2;color:#ddd6fe}
+
+        .stats{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:15px;
+            margin-bottom:22px;
+        }
+
+        .stat,.card{
+            background:linear-gradient(145deg,#11182b,#0d1527);
+            border:1px solid #263451;
+            border-radius:20px;
+            padding:22px;
+        }
+
+        .stat b{
+            font-size:28px;
+            display:block;
+            margin:7px 0;
+        }
+
+        .muted{color:#94a3b8}
+
+        .grid{
+            display:grid;
+            grid-template-columns:1.3fr 1fr;
+            gap:18px;
+        }
+
+        .primary{
+            border:0;
+            border-radius:12px;
+            padding:13px 20px;
+            color:#fff;
+            background:linear-gradient(135deg,#7c3aed,#2563eb);
+            cursor:pointer;
+        }
+
+        .primary:hover{filter:brightness(1.15)}
+
+        .form-grid{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:15px;
+        }
+
+        .field label{
+            display:block;
+            color:#94a3b8;
+            margin-bottom:7px;
+        }
+
+        .field input,.field select{
+            width:100%;
+            padding:13px;
+            background:#080e1d;
+            color:white;
+            border:1px solid #293653;
+            border-radius:12px;
+            outline:none;
+        }
+
+        .difficulty{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:10px;
+        }
+
+        .diff{
+            padding:15px;
+            border-radius:12px;
+            border:1px solid #293653;
+            background:#080e1d;
+            color:white;
+            cursor:pointer;
+        }
+
+        .diff.selected{
+            background:#7c3aed33;
+            border-color:#a78bfa;
+        }
+
+        .exam-head{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .timer{
+            font-size:25px;
+            color:#67e8f9;
+            font-weight:bold;
+        }
+
+        .progress{
+            height:9px;
+            background:#080e1d;
+            border-radius:20px;
+            overflow:hidden;
+        }
+
+        .progress div{
+            height:100%;
+            background:linear-gradient(90deg,#06b6d4,#8b5cf6);
+            transition:.4s;
+        }
+
+        .question{
+            font-size:21px;
+            line-height:2;
+            margin:25px 0;
+        }
+
+        .options{
+            display:grid;
+            gap:12px;
+        }
+
+        .option{
+            width:100%;
+            padding:15px;
+            border:1px solid #293653;
+            background:#0b1222;
+            color:white;
+            border-radius:12px;
+            text-align:right;
+            cursor:pointer;
+        }
+
+        .option:hover{border-color:#8b5cf6}
+        .option.correct{background:#14532d;border-color:#22c55e}
+        .option.wrong{background:#7f1d1d;border-color:#ef4444}
+
+        .result{
+            text-align:center;
+            padding:30px;
+        }
+
+        .scoreCircle{
+            width:180px;
+            height:180px;
+            margin:25px auto;
+            border-radius:50%;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            background:radial-gradient(circle,#111827 60%,transparent 61%),conic-gradient(#8b5cf6 75%,#1e293b 0);
+        }
+
+        .scoreCircle strong{font-size:42px}
+
+        .exam-card{
+            padding:20px;
+            border:1px solid #293653;
+            border-radius:18px;
+            background:#0c1426;
+            margin-bottom:14px;
+        }
+
+        .exam-card h3{margin-top:0}
+
+        .countdown{
+            font-size:20px;
+            color:#67e8f9;
+            font-weight:bold;
+        }
+
+        .status{
+            display:inline-block;
+            padding:7px 12px;
+            border-radius:20px;
+            background:#7c3aed33;
+            color:#c4b5fd;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+        }
+
+        th,td{
+            padding:13px;
+            border-bottom:1px solid #293653;
+            text-align:center;
+        }
+
+        th{
+            background:#312e81;
+        }
+
+        .chat{
+            height:500px;
+            display:flex;
+            flex-direction:column;
+        }
+
+        .messages{
+            flex:1;
+            overflow:auto;
+            padding:15px;
+            background:#080e1d;
+            border-radius:15px;
+        }
+
+        .msg{
+            max-width:75%;
+            padding:12px 15px;
+            border-radius:15px;
+            margin-bottom:10px;
+            line-height:1.8;
+        }
+
+        .bot{background:#182238}
+        .me{
+            background:linear-gradient(135deg,#7c3aed,#2563eb);
+            margin-right:auto;
+        }
+
+        .chatbar{
+            display:flex;
+            gap:10px;
+            margin-top:10px;
+        }
+
+        .chatbar input{
+            flex:1;
+            padding:13px;
+            background:#080e1d;
+            color:#fff;
+            border:1px solid #293653;
+            border-radius:12px;
+        }
+
+        .schedule{
+            display:grid;
+            grid-template-columns:repeat(5,1fr);
+            gap:10px;
+        }
+
+        .day{
+            padding:15px;
+            background:#0b1222;
+            border:1px solid #293653;
+            border-radius:15px;
+        }
+
+        .day h3{color:#a78bfa}
+        .day p{
+            padding:8px 0;
+            border-bottom:1px solid #ffffff0b;
+        }
+
+        @media(max-width:950px){
+            .sidebar{
+                transform:translateX(100%);
+                transition:.3s;
+            }
+            .sidebar.open{transform:translateX(0)}
+            .main{margin-right:0}
+            .stats{grid-template-columns:repeat(2,1fr)}
+            .grid{grid-template-columns:1fr}
+            .schedule{grid-template-columns:repeat(2,1fr)}
+        }
+
+        @media(max-width:600px){
+            .content{padding:15px}
+            .stats{grid-template-columns:1fr}
+            .form-grid{grid-template-columns:1fr}
+            .difficulty{grid-template-columns:1fr}
+            .schedule{grid-template-columns:1fr}
+            .search{width:170px}
+        }
+    </style>
+</head>
+
+<body>
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="logo">🎓 Edu<span>X</span></div>
+
+    <div class="user">
+        <div class="avatar">👨‍🎓</div>
+        <h3 id="sideName">دانش‌آموز</h3>
+        <small>پایه هشتم</small>
+    </div>
+
+    <div class="menu">
+
+        <button class="active" onclick="showPage('home',this)">🏠 داشبورد</button>
+        <button onclick="showPage('virtual',this)">🧠 امتحان مجازی</button>
+        <button onclick="showPage('schoolExams',this)">📅 امتحانات مدرسه</button>
+        <button onclick="showPage('marks',this)">📊 نمرات من</button>
+        <button onclick="showPage('schedule',this)">📚 برنامه هفتگی</button>
+        <button onclick="showPage('planner',this)">🎯 برنامه مطالعه</button>
+        <button onclick="showPage('chat',this)">🤖 دستیار هوشمند</button>
+        <button onclick="showPage('profile',this)">👤 پروفایل</button>
+
+    </div>
+</aside>
+
+
+<main class="main">
+
+    <header class="top">
+
+        <div>
+            <button class="icon" onclick="toggleMenu()">☰</button>
+        </div>
+
+        <input class="search" placeholder="🔎 جستجو...">
+
+        <div>
+            <button class="icon" onclick="alert('اعلان جدیدی نداری 🔔')">🔔</button>
+        </div>
+
+    </header>
+
+
+    <div class="content">
+
+
+        <!-- DASHBOARD -->
+
+        <section id="home" class="page active">
+
+            <div class="hero">
+
+                <h1 id="hello">سلام دانش‌آموز! 🚀</h1>
+
+                <p>
+                    به پنل هوشمند مدرسه خوش آمدی.
+                    امتحان بده، نمره ثبت کن،
+                    امتحاناتت را مدیریت کن و برای درس‌ها برنامه‌ریزی کن.
+                </p>
+
+            </div>
+
+
+            <div class="stats">
+
+                <div class="stat">
+                    <span>🧠</span>
+                    <b id="examCount">0</b>
+                    <small class="muted">آزمون انجام‌شده</small>
+                </div>
+
+                <div class="stat">
+                    <span>📊</span>
+                    <b id="average">-</b>
+                    <small class="muted">معدل</small>
+                </div>
+
+                <div class="stat">
+                    <span>🏆</span>
+                    <b id="best">-</b>
+                    <small class="muted">بهترین درصد</small>
+                </div>
+
+                <div class="stat">
+                    <span>📅</span>
+                    <b id="nextExam">-</b>
+                    <small class="muted">نزدیک‌ترین امتحان</small>
+                </div>
+
+            </div>
+
+
+            <div class="grid">
+
+                <div class="card">
+
+                    <h2>🚀 شروع سریع</h2>
+
+                    <p class="muted">
+                        یک امتحان مجازی بساز و خودت تعداد سؤال و سختی را انتخاب کن.
+                    </p>
+
+                    <button class="primary" onclick="showPage('virtual')">
+                        شروع امتحان مجازی
+                    </button>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h2>⏰ امتحان بعدی</h2>
+
+                    <div id="dashboardNextExam">
+                        هنوز امتحانی ثبت نشده.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- VIRTUAL EXAM -->
+
+        <section id="virtual" class="page">
+
+            <div class="card">
+
+                <h1>🧠 امتحان مجازی</h1>
+
+                <p class="muted">
+                    درس، تعداد سؤال، زمان و درصد سختی را خودت تعیین کن.
+                </p>
+
+                <br>
+
+                <div id="setup">
+
+                    <div class="form-grid">
+
+                        <div class="field">
+                            <label>📚 درس</label>
+
+                            <select id="subject">
+
+                                <option value="math">ریاضی</option>
+                                <option value="science">علوم</option>
+                                <option value="persian">فارسی</option>
+                                <option value="english">انگلیسی</option>
+                                <option value="arabic">عربی</option>
+                                <option value="social">مطالعات اجتماعی</option>
+                                <option value="quran">آموزش قرآن</option>
+                                <option value="technology">کار و فناوری</option>
+                                <option value="thinking">تفکر و سبک زندگی</option>
+
+                            </select>
+                        </div>
+
+
+                        <div class="field">
+                            <label>🔢 تعداد سؤال</label>
+
+                            <select id="questionCount">
+                                <option value="5">۵ سؤال</option>
+                                <option value="10">۱۰ سؤال</option>
+                                <option value="15">۱۵ سؤال</option>
+                                <option value="20">۲۰ سؤال</option>
+                                <option value="25">۲۵ سؤال</option>
+                                <option value="30">۳۰ سؤال</option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="field">
+                            <label>⏱️ زمان</label>
+
+                            <select id="examMinutes">
+                                <option value="5">۵ دقیقه</option>
+                                <option value="10">۱۰ دقیقه</option>
+                                <option value="20">۲۰ دقیقه</option>
+                                <option value="30">۳۰ دقیقه</option>
+                                <option value="45">۴۵ دقیقه</option>
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <br>
+
+                    <label class="muted">
+                        🎚️ درصد سختی:
+                    </label>
+
+                    <br><br>
+
+                    <div class="difficulty">
+
+                        <button class="diff selected" onclick="setDifficulty(30,this)">
+                            🟢 آسان<br>۳۰٪
+                        </button>
+
+                        <button class="diff" onclick="setDifficulty(60,this)">
+                            🟡 متوسط<br>۶۰٪
+                        </button>
+
+                        <button class="diff" onclick="setDifficulty(90,this)">
+                            🔴 سخت<br>۹۰٪
+                        </button>
+
+                    </div>
+
+                    <br>
+
+                    <button class="primary" onclick="startExam()">
+                        🚀 شروع امتحان
+                    </button>
+
+                </div>
+
+
+                <div id="examBox" style="display:none">
+
+                    <div class="exam-head">
+
+                        <h2 id="examTitle"></h2>
+
+                        <div class="timer" id="timer">
+                            00:00
+                        </div>
+
+                    </div>
+
+                    <br>
+
+                    <div class="progress">
+                        <div id="progress"></div>
+                    </div>
+
+                    <div id="questionBox"></div>
+
+                    <button class="primary" onclick="nextQuestion()">
+                        سؤال بعدی ➜
+                    </button>
+
+                    <button class="primary" onclick="finishExam()">
+                        🏁 پایان
+                    </button>
+
+                </div>
+
+
+                <div id="resultBox" style="display:none">
+
+                    <div class="result">
+
+                        <h1>🎉 نتیجه امتحان</h1>
+
+                        <div class="scoreCircle">
+
+                            <strong id="resultPercent">0%</strong>
+
+                            <span>امتیاز</span>
+
+                        </div>
+
+                        <h2 id="resultMessage"></h2>
+
+                        <p class="muted" id="resultDetails"></p>
+
+                        <br>
+
+                        <button class="primary" onclick="resetExam()">
+                            🔄 امتحان جدید
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SCHOOL EXAMS -->
+
+        <section id="schoolExams" class="page">
+
+            <div class="card">
+
+                <h1>📅 امتحانات مدرسه</h1>
+
+                <p class="muted">
+                    تاریخ امتحاناتت را اینجا اضافه کن تا شمارش معکوس و برنامه‌ریزی فعال شود.
+                </p>
+
+                <br>
+
+                <div class="form-grid">
+
+                    <div class="field">
+                        <label>درس</label>
+
+                        <select id="schoolSubject">
+
+                            <option>ریاضی</option>
+                            <option>علوم</option>
+                            <option>فارسی</option>
+                            <option>نگارش</option>
+                            <option>انگلیسی</option>
+                            <option>عربی</option>
+                            <option>مطالعات اجتماعی</option>
+                            <option>آموزش قرآن</option>
+                            <option>کار و فناوری</option>
+                            <option>تفکر و سبک زندگی</option>
+                            <option>فرهنگ و هنر</option>
+                            <option>از من تا خدا</option>
+
+                        </select>
+                    </div>
+
+
+                    <div class="field">
+                        <label>تاریخ امتحان</label>
+
+                        <input type="date" id="schoolDate">
+
+                    </div>
+
+                </div>
+
+                <br>
+
+                <button class="primary" onclick="addSchoolExam()">
+                    ➕ اضافه کردن امتحان
+                </button>
+
+                <br><br>
+
+                <div id="schoolExamList"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MARKS -->
+
+        <section id="marks" class="page">
+
+            <div class="card">
+
+                <h1>📊 نمرات من</h1>
+
+                <div class="form-grid">
+
+                    <div class="field">
+
+                        <label>درس</label>
+
+                        <select id="markSubject">
+
+                            <option>ریاضی</option>
+                            <option>علوم</option>
+                            <option>فارسی</option>
+                            <option>نگارش</option>
+                            <option>انگلیسی</option>
+                            <option>عربی</option>
+                            <option>مطالعات اجتماعی</option>
+                            <option>قرآن</option>
+                            <option>کار و فناوری</option>
+                            <option>هنر</option>
+                            <option>تفکر و سبک زندگی</option>
+                            <option>از من تا خدا</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>نمره از ۲۰</label>
+
+                        <input id="markValue" type="number" min="0" max="20">
+
+                    </div>
+
+                </div>
+
+                <br>
+
+                <button class="primary" onclick="addMark()">
+                    ➕ ثبت نمره
+                </button>
+
+                <br><br>
+
+                <table>
+
+                    <thead>
+                    <tr>
+                        <th>درس</th>
+                        <th>نمره</th>
+                        <th>وضعیت</th>
+                        <th>حذف</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="marksBody"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- SCHEDULE -->
+
+        <section id="schedule" class="page">
+
+            <div class="card">
+
+                <h1>📚 برنامه هفتگی</h1>
+
+                <br>
+
+                <div class="schedule">
+
+                    <div class="day">
+                        <h3>شنبه</h3>
+                        <p>مطالعات اجتماعی</p>
+                        <p>علوم</p>
+                        <p>ریاضی</p>
+                        <p>تفکر</p>
+                    </div>
+
+                    <div class="day">
+                        <h3>یکشنبه</h3>
+                        <p>تفکر</p>
+                        <p>زبان</p>
+                        <p>قرآن / زبان</p>
+                    </div>
+
+                    <div class="day">
+                        <h3>دوشنبه</h3>
+                        <p>ریاضی</p>
+                        <p>از من تا خدا</p>
+                        <p>فارسی</p>
+                    </div>
+
+                    <div class="day">
+                        <h3>سه‌شنبه</h3>
+                        <p>کار و فناوری</p>
+                        <p>املا و انشا</p>
+                        <p>علوم / ورزش</p>
+                    </div>
+
+                    <div class="day">
+                        <h3>چهارشنبه</h3>
+                        <p>عربی</p>
+                        <p>قرآن / ورزش</p>
+                        <p>هنر</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PLANNER -->
+
+        <section id="planner" class="page">
+
+            <div class="card">
+
+                <h1>🎯 برنامه مطالعه</h1>
+
+                <p class="muted">
+                    برنامه پیشنهادی بر اساس نزدیک‌ترین امتحان‌ها:
+                </p>
+
+                <br>
+
+                <div id="studyPlan"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CHAT -->
+
+        <section id="chat" class="page">
+
+            <div class="card chat">
+
+                <h2>🤖 دستیار هوشمند</h2>
+
+                <div class="messages" id="messages">
+
+                    <div class="msg bot">
+                        سلام! 👋<br>
+                        من دستیار EduX هستم.<br><br>
+                        می‌تونی درباره امتحانات، نمره‌ها،
+                        برنامه مدرسه و روش مطالعه از من سؤال کنی.
+                    </div>
+
+                </div>
+
+                <div class="chatbar">
+
+                    <input id="chatInput"
+                           placeholder="مثلاً: امتحان بعدیم کیه؟"
+                           onkeydown="if(event.key==='Enter')sendChat()">
+
+                    <button class="primary" onclick="sendChat()">
+                        ارسال
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROFILE -->
+
+        <section id="profile" class="page">
+
+            <div class="card">
+
+                <h1>👤 پروفایل</h1>
+
+                <div class="field">
+
+                    <label>نام</label>
+
+                    <input id="nameInput" placeholder="نامت را وارد کن">
+
+                </div>
+
+                <br>
+
+                <button class="primary" onclick="saveName()">
+                    💾 ذخیره
+                </button>
+
+            </div>
+
+        </section>
+
+
+    </div>
+</main>
+
+
+<script>
+
+    /* ===================================
+       QUESTION BANK
+       تعداد سؤال زیاد شده
+    =================================== */
+
+    const QUESTIONS={
+
+        math:[
+            ["حاصل ۷ × ۸ چیست؟",["۵۴","۵۶","۶۴","۴۸"],1,20],
+            ["حاصل ۱۲ + ۱۸ چیست؟",["۲۵","۳۰","۳۲","۳۵"],1,20],
+            ["حاصل ۹ × ۹ چیست؟",["۷۲","۸۱","۹۱","۷۹"],1,30],
+            ["مجموع زاویه‌های مثلث چند درجه است؟",["۹۰","۱۸۰","۲۷۰","۳۶۰"],1,30],
+            ["اگر x+5=12 باشد x چند است؟",["۵","۶","۷","۸"],2,40],
+            ["اگر ۲x=۱۸ باشد x چند است؟",["۶","۷","۸","۹"],3,40],
+            ["مساحت مستطیل با طول ۸ و عرض ۵ چند است؟",["۱۳","۲۶","۴۰","۸۰"],2,40],
+            ["حاصل ۳² چیست؟",["۶","۹","۱۲","۲۷"],1,30],
+            ["عدد اول کدام است؟",["۹","۱۵","۱۷","۲۱"],2,50],
+            ["محیط مربع با ضلع ۶ چند است؟",["۱۲","۱۸","۲۴","۳۶"],2,40],
+            ["نصف ۵۰ چند است؟",["۲۰","۲۵","۳۰","۳۵"],1,20],
+            ["کدام عدد بر ۳ بخش‌پذیر است؟",["۱۴","۱۷","۲۱","۲۵"],2,40],
+            ["حاصل ۱۰۰÷۴ چیست؟",["۲۰","۲۵","۳۰","۴۰"],1,20],
+            ["کسر ۲/۴ با کدام برابر است؟",["۱/۲","۱/۳","۲/۳","۳/۴"],0,40],
+            ["اگر محیط مربع ۲۰ باشد ضلع آن چند است؟",["۴","۵","۶","۱۰"],1,60],
+            ["حاصل ۵²+۱۲² چیست؟",["۱۶۹","۱۴۴","۱۵۶","۱۲۵"],0,90],
+            ["میانگین ۱۰ و ۲۰ چند است؟",["۱۰","۱۵","۲۰","۳۰"],1,50],
+            ["عدد منفی × عدد منفی چه علامتی دارد؟",["منفی","مثبت","صفر","بستگی دارد"],1,60],
+            ["اگر ۳x=۲۴ باشد x چند است؟",["۶","۷","۸","۹"],2,50],
+            ["مساحت مثلث با قاعده ۱۰ و ارتفاع ۶ چند است؟",["۳۰","۶۰","۱۶","۴۰"],0,70]
+        ],
+
+        science:[
+            ["کدام منبع انرژی تجدیدپذیر است؟",["نفت","زغال‌سنگ","خورشید","گاز"],2,30],
+            ["واحد نیرو چیست؟",["ژول","نیوتن","وات","متر"],1,60],
+            ["کدام اندام خون را پمپاژ می‌کند؟",["ریه","مغز","قلب","کبد"],2,30],
+            ["تبدیل جامد به مایع چه نام دارد؟",["انجماد","تبخیر","ذوب","تراکم"],2,40],
+            ["کدام تغییر شیمیایی است؟",["ذوب یخ","پاره کردن کاغذ","سوختن چوب","خرد کردن سنگ"],2,70],
+            ["بیشترین گاز موجود در هوا چیست؟",["اکسیژن","نیتروژن","کربن دی‌اکسید","هیدروژن"],1,60],
+            ["کدام سیاره به خورشید نزدیک‌تر است؟",["زمین","مریخ","عطارد","زهره"],2,40],
+            ["واحد انرژی چیست؟",["ژول","نیوتن","متر","ثانیه"],0,50],
+            ["گیاهان برای فتوسنتز به چه چیزی نیاز دارند؟",["نور","آهن","نمک","نفت"],0,30],
+            ["کدام اندام وظیفه تنفس را دارد؟",["قلب","ریه","کبد","معده"],1,30],
+            ["آب در دمای چند درجه یخ می‌زند؟",["۰","۱۰","۵۰","۱۰۰"],0,20],
+            ["آب در فشار معمولی در چند درجه می‌جوشد؟",["۵۰","۷۵","۱۰۰","۲۰۰"],2,30],
+            ["کدام ماده رسانای خوب برق است؟",["چوب","مس","پلاستیک","شیشه"],1,50],
+            ["نیرو می‌تواند باعث چه چیزی شود؟",["تغییر حرکت","تغییر رنگ همیشه","تولید صدا همیشه","هیچ‌کدام"],0,70],
+            ["زمین به دور چه چیزی می‌گردد؟",["ماه","خورشید","مریخ","مشتری"],1,20]
+        ],
+
+        persian:[
+            ["مترادف شاد چیست؟",["غمگین","خوشحال","خسته","عصبانی"],1,20],
+            ["کدام مورد اسم است؟",["دویدن","زیبا","کتاب","رفت"],2,30],
+            ["مخالف تاریک چیست؟",["سیاه","روشن","شب","خاموش"],1,20],
+            ["کدام کلمه صفت است؟",["خانه","زیبا","رفت","دویدن"],1,40],
+            ["«دانش‌آموز» چه نوع کلمه‌ای است؟",["اسم","فعل","حرف","صفت"],0,40],
+            ["کدام مورد فعل است؟",["کتاب","زیبا","رفت","مدرسه"],2,30],
+            ["مترادف آغاز چیست؟",["پایان","شروع","وسط","توقف"],1,30],
+            ["مخالف پیروزی چیست؟",["موفقیت","شکست","تلاش","هدف"],1,30],
+            ["شعر معمولاً دارای چه چیزی است؟",["وزن","فرمول","نقشه","جدول"],0,50],
+            ["کدام گزینه جمله کامل است؟",["کتاب زیبا","علی به مدرسه رفت.","مدرسه بزرگ","درخت بلند"],1,50]
+        ],
+
+        english:[
+            ["What is the opposite of big?",["small","fast","long","high"],0,30],
+            ["He ___ happy.",["are","is","am","be"],1,40],
+            ["Book means?",["مدرسه","کتاب","خانه","دوست"],1,20],
+            ["I ___ a student.",["am","is","are","be"],0,30],
+            ["They ___ friends.",["is","am","are","be"],2,30],
+            ["What is the plural of child?",["childs","children","childes","child"],1,60],
+            ["She ___ English.",["speak","speaks","speaking","spoke"],1,60],
+            ["Opposite of hot?",["cold","warm","big","fast"],0,20],
+            ["What does school mean?",["خانه","مدرسه","کتاب","معلم"],1,20],
+            ["We ___ football.",["plays","play","playing","is play"],1,40]
+        ],
+
+        arabic:[
+            ["کتاب در عربی چیست؟",["قلم","کتاب","باب","ولد"],1,20],
+            ["ولد یعنی چه؟",["دختر","پسر","معلم","کتاب"],1,30],
+            ["بنت یعنی چه؟",["پسر","دختر","خانه","معلم"],1,30],
+            ["معلم یعنی چه؟",["دانش‌آموز","معلم","کتاب","دوست"],1,30],
+            ["مدرسه یعنی چه؟",["مدرسه","خانه","کتاب","بازار"],0,20],
+            ["قلم یعنی چه؟",["دفتر","قلم","کتاب","در"],1,30],
+            ["باب یعنی چه؟",["در","خانه","پسر","دختر"],0,40],
+            ["ام به چه معناست؟",["هستم","هستی","هست","هستند"],0,60]
+        ],
+
+        social:[
+            ["پایتخت ایران کدام است؟",["تبریز","شیراز","تهران","اصفهان"],2,20],
+            ["ایران در کدام قاره قرار دارد؟",["اروپا","آسیا","آفریقا","آمریکا"],1,30],
+            ["کدام مورد یک قاره است؟",["ایران","آسیا","تهران","خزر"],1,20],
+            ["دریای خزر در کدام بخش ایران قرار دارد؟",["شمال","جنوب","شرق","غرب"],0,30],
+            ["خلیج فارس در کدام بخش ایران است؟",["شمال","جنوب","شرق","غرب"],1,30],
+            ["وظیفه اصلی قانون چیست؟",["ایجاد نظم","ایجاد جنگ","حذف مردم","هیچ‌کدام"],0,60],
+            ["شهروند چه کسی است؟",["عضو جامعه","فقط معلم","فقط دانش‌آموز","فقط ورزشکار"],0,50]
+        ],
+
+        quran:[
+            ["قرآن کریم به چه زبانی نازل شده است؟",["فارسی","عربی","انگلیسی","ترکی"],1,20],
+            ["قرآن کتاب آسمانی مسلمانان است؟",["درست","غلط","فقط تاریخی","نامشخص"],0,20],
+            ["سوره نخست قرآن چیست؟",["حمد","ناس","فلق","کوثر"],0,50],
+            ["کدام مورد نام یک سوره است؟",["کوثر","تهران","مدرسه","کتاب"],0,20],
+            ["قرآن چند جزء دارد؟",["۲۰","۲۵","۳۰","۴۰"],2,40]
+        ],
+
+        technology:[
+            ["کدام مورد یک سیستم‌عامل است؟",["Windows","Keyboard","Mouse","Monitor"],0,40],
+            ["CPU چه نقشی دارد؟",["پردازش اطلاعات","چاپ","نمایش تصویر","ذخیره کاغذ"],0,60],
+            ["کدام وسیله ورودی رایانه است؟",["مانیتور","کیبورد","بلندگو","پرینتر"],1,30],
+            ["اینترنت چیست؟",["شبکه‌ای از شبکه‌ها","فقط یک برنامه","یک فایل","یک بازی"],0,60],
+            ["HTML بیشتر برای چیست؟",["ساختار صفحه وب","ویرایش عکس","محاسبه","ضبط صدا"],0,60]
+        ],
+
+        thinking:[
+            ["تفکر انتقادی یعنی چه؟",["بررسی و ارزیابی منطقی","حفظ کردن","حدس زدن","نادیده گرفتن"],0,70],
+            ["حل مسئله معمولاً با چه چیزی شروع می‌شود؟",["شناخت مسئله","جواب دادن فوری","تسلیم شدن","حدس"],0,50],
+            ["کدام مورد به تصمیم‌گیری کمک می‌کند؟",["بررسی پیامدها","عجله","نادیده گرفتن اطلاعات","حدس"],0,60],
+            ["گفت‌وگوی خوب نیازمند چیست؟",["گوش دادن","قطع کردن حرف دیگران","داد زدن","بی‌توجهی"],0,30]
+        ]
+
+    };
+
+
+    /* ===================================
+       NAVIGATION
+    =================================== */
+
+    function showPage(id,button){
+
+        document.querySelectorAll(".page")
+            .forEach(p=>p.classList.remove("active"));
+
+        document.getElementById(id)
+            .classList.add("active");
+
+        document.querySelectorAll(".menu button")
+            .forEach(b=>b.classList.remove("active"));
+
+        if(button)button.classList.add("active");
+
+        if(id==="planner")buildPlan();
+
+    }
+
+
+    /* ===================================
+       MOBILE MENU
+    =================================== */
+
+    function toggleMenu(){
+        document.getElementById("sidebar")
+            .classList.toggle("open");
+    }
+
+
+    /* ===================================
+       EXAM
+    =================================== */
+
+    let difficulty=30;
+    let exam=[];
+    let currentQuestion=0;
+    let correct=0;
+    let timeLeft=0;
+    let timer=null;
+    let answered=false;
+
+
+    function setDifficulty(value,button){
+
+        difficulty=value;
+
+        document.querySelectorAll(".diff")
+            .forEach(x=>x.classList.remove("selected"));
+
+        button.classList.add("selected");
+    }
+
+
+    function startExam(){
+
+        const subject=
+            document.getElementById("subject").value;
+
+        const count=
+            Number(document.getElementById("questionCount").value);
+
+        const minutes=
+            Number(document.getElementById("examMinutes").value);
+
+        let pool=[
+            ...(QUESTIONS[subject]||[])
+        ];
+
+        if(!pool.length){
+            alert("برای این درس هنوز سؤال ثبت نشده.");
+            return;
+        }
+
+        /*
+        انتخاب سؤال بر اساس سختی
+        */
+
+        let suitable=
+            pool.filter(q=>
+                Math.abs(q[3]-difficulty)<=35
+            );
+
+        if(suitable.length<5)
+            suitable=pool;
+
+        suitable.sort(()=>Math.random()-0.5);
+
+        exam=[];
+
+        for(let i=0;i<count;i++){
+            exam.push(suitable[i%suitable.length]);
+        }
+
+        currentQuestion=0;
+        correct=0;
+        answered=false;
+
+        document.getElementById("setup")
+            .style.display="none";
+
+        document.getElementById("examBox")
+            .style.display="block";
+
+        document.getElementById("resultBox")
+            .style.display="none";
+
+        document.getElementById("examTitle")
+            .textContent=
+            "امتحان "+getSubjectName(subject);
+
+        timeLeft=minutes*60;
+
+        clearInterval(timer);
+
+        timer=setInterval(()=>{
+
+            timeLeft--;
+
+            updateTimer();
+
+            if(timeLeft<=0){
+                finishExam();
+            }
+
+        },1000);
+
+        renderQuestion();
+
+    }
+
+
+    function getSubjectName(s){
+
+        const names={
+            math:"ریاضی",
+            science:"علوم",
+            persian:"فارسی",
+            english:"انگلیسی",
+            arabic:"عربی",
+            social:"مطالعات اجتماعی",
+            quran:"آموزش قرآن",
+            technology:"کار و فناوری",
+            thinking:"تفکر و سبک زندگی"
+        };
+
+        return names[s]||s;
+    }
+
+
+    function updateTimer(){
+
+        const min=
+            Math.floor(timeLeft/60);
+
+        const sec=
+            timeLeft%60;
+
+        document.getElementById("timer")
+            .textContent=
+            String(min).padStart(2,"0")
+            +":"+String(sec).padStart(2,"0");
+
+    }
+
+
+    function renderQuestion(){
+
+        const q=exam[currentQuestion];
+
+        answered=false;
+
+        document.getElementById("progress")
+            .style.width=
+            (currentQuestion/exam.length*100)+"%";
+
+        let html=`
+
+ <div class="question">
+
+ سؤال ${currentQuestion+1} از ${exam.length}
+
+ <br><br>
+
+ <strong>${q[0]}</strong>
+
+ </div>
+
+ <div class="options">
+ `;
+
+        q[1].forEach((answer,index)=>{
+
+            html+=`
+
+  <button class="option"
+  onclick="answerQuestion(${index},this)">
+
+  ${String.fromCharCode(1575+index)})
+  ${answer}
+
+  </button>
+
+  `;
+
+        });
+
+        html+="</div>";
+
+        document.getElementById("questionBox")
+            .innerHTML=html;
+
+    }
+
+
+    function answerQuestion(index,button){
+
+        if(answered)return;
+
+        answered=true;
+
+        const q=exam[currentQuestion];
+
+        const options=
+            document.querySelectorAll(".option");
+
+        if(index===q[2]){
+
+            correct++;
+
+            button.classList.add("correct");
+
+        }else{
+
+            button.classList.add("wrong");
+
+            options[q[2]]
+                .classList.add("correct");
+
+        }
+
+    }
+
+
+    function nextQuestion(){
+
+        if(!answered){
+            alert("اول یک گزینه را انتخاب کن!");
+            return;
+        }
+
+        if(currentQuestion<exam.length-1){
+
+            currentQuestion++;
+            renderQuestion();
+
+        }else{
+
+            finishExam();
+
+        }
+
+    }
+
+
+    function finishExam(){
+
+        clearInterval(timer);
+
+        const percent=
+            Math.round(correct/exam.length*100);
+
+        document.getElementById("examBox")
+            .style.display="none";
+
+        document.getElementById("resultBox")
+            .style.display="block";
+
+        document.getElementById("resultPercent")
+            .textContent=percent+"%";
+
+        document.getElementById("resultDetails")
+            .textContent=
+            "از "+exam.length+
+            " سؤال، "+correct+
+            " سؤال درست بود.";
+
+        if(percent>=90)
+            document.getElementById("resultMessage")
+                .textContent="🏆 عالی بود!";
+
+        else if(percent>=75)
+            document.getElementById("resultMessage")
+                .textContent="🔥 خیلی خوب بود!";
+
+        else if(percent>=50)
+            document.getElementById("resultMessage")
+                .textContent="👍 خوبه، بیشتر تمرین کن.";
+
+        else
+            document.getElementById("resultMessage")
+                .textContent="💪 دوباره تمرین کن!";
+
+        examHistory.push({
+            percent:percent,
+            date:new Date().toLocaleDateString("fa-IR")
+        });
+
+        localStorage.setItem(
+            "examHistory",
+            JSON.stringify(examHistory)
+        );
+
+        updateDashboard();
+
+    }
+
+
+    function resetExam(){
+
+        document.getElementById("resultBox")
+            .style.display="none";
+
+        document.getElementById("setup")
+            .style.display="block";
+
+    }
+
+
+    /* ===================================
+       SCHOOL EXAMS
+    =================================== */
+
+    let schoolExams=
+        JSON.parse(
+            localStorage.getItem("schoolExams")||"[]"
+        );
+
+
+    function addSchoolExam(){
+
+        const subject=
+            document.getElementById("schoolSubject").value;
+
+        const date=
+            document.getElementById("schoolDate").value;
+
+        if(!date){
+            alert("تاریخ امتحان را انتخاب کن.");
+            return;
+        }
+
+        schoolExams.push({
+            subject:subject,
+            date:date
+        });
+
+        schoolExams.sort(
+            (a,b)=>new Date(a.date)-new Date(b.date)
+        );
+
+        localStorage.setItem(
+            "schoolExams",
+            JSON.stringify(schoolExams)
+        );
+
+        document.getElementById("schoolDate").value="";
+
+        renderSchoolExams();
+
+    }
+
+
+    function daysUntil(date){
+
+        const now=new Date();
+        const target=new Date(date+"T00:00:00");
+
+        now.setHours(0,0,0,0);
+
+        return Math.ceil(
+            (target-now)/(1000*60*60*24)
+        );
+
+    }
+
+
+    function renderSchoolExams(){
+
+        const box=
+            document.getElementById("schoolExamList");
+
+        box.innerHTML="";
+
+        if(!schoolExams.length){
+
+            box.innerHTML=
+                "<p class='muted'>هنوز امتحانی ثبت نشده.</p>";
+
+            updateDashboard();
+
+            return;
+        }
+
+        schoolExams.forEach((e,index)=>{
+
+            const days=daysUntil(e.date);
+
+            let text;
+
+            if(days<0)
+                text="امتحان گذشته";
+            else if(days===0)
+                text="🚨 امروز";
+            else if(days===1)
+                text="⏰ فردا";
+            else
+                text="⏳ "+days+" روز مانده";
+
+            box.innerHTML+=`
+
+  <div class="exam-card">
+
+  <h3>📚 ${e.subject}</h3>
+
+  <p class="muted">
+  تاریخ: ${e.date}
+  </p>
+
+  <div class="countdown">
+  ${text}
+  </div>
+
+  <br>
+
+  <button class="primary"
+  onclick="removeSchoolExam(${index})">
+
+  🗑️ حذف
+
+  </button>
+
+  </div>
+
+  `;
+
+        });
+
+        updateDashboard();
+
+    }
+
+
+    function removeSchoolExam(index){
+
+        schoolExams.splice(index,1);
+
+        localStorage.setItem(
+            "schoolExams",
+            JSON.stringify(schoolExams)
+        );
+
+        renderSchoolExams();
+
+    }
+
+
+    /* ===================================
+       MARKS
+    =================================== */
+
+    let marks=
+        JSON.parse(
+            localStorage.getItem("marks")||"[]"
+        );
+
+
+    function addMark(){
+
+        const subject=
+            document.getElementById("markSubject").value;
+
+        const value=
+            Number(
+                document.getElementById("markValue").value
+            );
+
+        if(value<0||value>20||isNaN(value)){
+
+            alert("نمره باید بین ۰ تا ۲۰ باشد.");
+
+            return;
+        }
+
+        marks.push({
+            subject:subject,
+            value:value
+        });
+
+        localStorage.setItem(
+            "marks",
+            JSON.stringify(marks)
+        );
+
+        document.getElementById("markValue").value="";
+
+        renderMarks();
+
+    }
+
+
+    function renderMarks(){
+
+        const body=
+            document.getElementById("marksBody");
+
+        body.innerHTML="";
+
+        marks.forEach((m,i)=>{
+
+            const status=
+                m.value>=18?"⭐ عالی":
+                    m.value>=15?"👍 خوب":
+                        "💪 نیاز به تلاش";
+
+            body.innerHTML+=`
+
+  <tr>
+
+  <td>${m.subject}</td>
+
+  <td>${m.value}</td>
+
+  <td>${status}</td>
+
+  <td>
+  <button
+  class="primary"
+  onclick="deleteMark(${i})">
+  🗑️
+  </button>
+  </td>
+
+  </tr>
+
+  `;
+
+        });
+
+        calculateAverage();
+
+    }
+
+
+    function deleteMark(i){
+
+        marks.splice(i,1);
+
+        localStorage.setItem(
+            "marks",
+            JSON.stringify(marks)
+        );
+
+        renderMarks();
+
+    }
+
+
+    function calculateAverage(){
+
+        if(!marks.length){
+
+            document.getElementById("average")
+                .textContent="-";
+
+            return;
+        }
+
+        const total=
+            marks.reduce(
+                (sum,m)=>sum+m.value,0
+            );
+
+        document.getElementById("average")
+            .textContent=
+            (total/marks.length).toFixed(2);
+
+    }
+
+
+    /* ===================================
+       STUDY PLAN
+    =================================== */
+
+    function buildPlan(){
+
+        const box=
+            document.getElementById("studyPlan");
+
+        if(!schoolExams.length){
+
+            box.innerHTML=
+                "<p class='muted'>اول تاریخ امتحاناتت را ثبت کن.</p>";
+
+            return;
+        }
+
+        let html="";
+
+        schoolExams.forEach(e=>{
+
+            const days=daysUntil(e.date);
+
+            let suggestion;
+
+            if(days<=1)
+                suggestion="🚨 مرور سریع + حل نمونه سؤال";
+
+            else if(days<=3)
+                suggestion="🔥 مطالعه اصلی + تمرین";
+
+            else if(days<=7)
+                suggestion="📚 مطالعه فصل‌ها + تست";
+
+            else
+                suggestion="🌱 مطالعه آرام و مرحله‌ای";
+
+            html+=`
+
+  <div class="exam-card">
+
+  <h3>${e.subject}</h3>
+
+  <p>
+  ⏳ ${days<0?"گذشته":days+" روز مانده"}
+  </p>
+
+  <p class="muted">
+  پیشنهاد:
+  </p>
+
+  <strong>${suggestion}</strong>
+
+  </div>
+
+  `;
+
+        });
+
+        box.innerHTML=html;
+
+    }
+
+
+    /* ===================================
+       DASHBOARD
+    =================================== */
+
+    let examHistory=
+        JSON.parse(
+            localStorage.getItem("examHistory")||"[]"
+        );
+
+
+    function updateDashboard(){
+
+        document.getElementById("examCount")
+            .textContent=examHistory.length;
+
+        if(examHistory.length){
+
+            const best=
+                Math.max(
+                    ...examHistory.map(x=>x.percent)
+                );
+
+            document.getElementById("best")
+                .textContent=best+"%";
+
+        }
+
+        if(schoolExams.length){
+
+            const upcoming=
+                schoolExams
+                    .filter(e=>daysUntil(e.date)>=0)
+                    .sort((a,b)=>daysUntil(a.date)-daysUntil(b.date))[0];
+
+            if(upcoming){
+
+                const days=daysUntil(upcoming.date);
+
+                document.getElementById("nextExam")
+                    .textContent=
+                    days===0?"امروز":days+" روز";
+
+                document.getElementById("dashboardNextExam")
+                    .innerHTML=`
+
+   <h3>📚 ${upcoming.subject}</h3>
+
+   <p class="countdown">
+   ${days===0?"🚨 امتحان امروز":
+                    "⏳ "+days+" روز تا امتحان"}
+   </p>
+
+   `;
+
+            }
+
+        }
+
+    }
+
+
+    /* ===================================
+       CHAT
+    =================================== */
+
+    function sendChat(){
+
+        const input=
+            document.getElementById("chatInput");
+
+        const text=
+            input.value.trim();
+
+        if(!text)return;
+
+        addMessage(text,"me");
+
+        input.value="";
+
+        setTimeout(()=>{
+
+            let reply=
+                "🤖 می‌تونی درباره امتحانات، نمرات، برنامه مطالعه یا درس‌ها از من سؤال کنی.";
+
+            const t=text.toLowerCase();
+
+            if(t.includes("امتحان"))
+                reply=
+                    "📅 برای دیدن امتحانات مدرسه وارد بخش «امتحانات مدرسه» شو. می‌تونی تاریخ هر امتحان رو ثبت کنی.";
+
+            else if(t.includes("فردا"))
+                reply=
+                    getNextExamText();
+
+            else if(t.includes("معدل"))
+                reply=
+                    "📊 معدل فعلی تو: "+
+                    document.getElementById("average").textContent;
+
+            else if(t.includes("ریاضی"))
+                reply=
+                    "📐 برای ریاضی اول درس را مرور کن، بعد تمرین حل کن و در پایان یک امتحان مجازی بزن.";
+
+            else if(t.includes("علوم"))
+                reply=
+                    "🔬 در علوم مفهوم‌ها را بفهم و بعد سراغ سؤال‌های امتحانی برو.";
+
+            else if(t.includes("سلام"))
+                reply=
+                    "سلام رفیق! 😎 آماده‌ای امتحان بدی؟";
+
+            addMessage(reply,"bot");
+
+        },500);
+
+    }
+
+
+    function getNextExamText(){
+
+        if(!schoolExams.length)
+            return "هنوز تاریخ امتحانی ثبت نکردی.";
+
+        const e=
+            schoolExams
+                .filter(x=>daysUntil(x.date)>=0)[0];
+
+        if(!e)
+            return "امتحان آینده‌ای ثبت نشده.";
+
+        return "📚 امتحان بعدی تو "+e.subject+
+            " است و "+daysUntil(e.date)+" روز مانده.";
+
+    }
+
+
+    function addMessage(text,type){
+
+        const box=
+            document.getElementById("messages");
+
+        const div=
+            document.createElement("div");
+
+        div.className="msg "+type;
+        div.textContent=text;
+
+        box.appendChild(div);
+
+        box.scrollTop=box.scrollHeight;
+
+    }
+
+
+    /* ===================================
+       PROFILE
+    =================================== */
+
+    function saveName(){
+
+        const name=
+            document.getElementById("nameInput")
+                .value.trim();
+
+        if(!name)return;
+
+        localStorage.setItem(
+            "studentName",
+            name
+        );
+
+        document.getElementById("sideName")
+            .textContent=name;
+
+        document.getElementById("hello")
+            .textContent=
+            "سلام "+name+"! 🚀";
+
+        alert("اسم ذخیره شد ✅");
+
+    }
+
+
+    /* ===================================
+       LOAD
+    =================================== */
+
+    const savedName=
+        localStorage.getItem("studentName");
+
+    if(savedName){
+
+        document.getElementById("sideName")
+            .textContent=savedName;
+
+        document.getElementById("hello")
+            .textContent=
+            "سلام "+savedName+"! 🚀";
+
+    }
+
+    renderMarks();
+    renderSchoolExams();
+    updateDashboard();
+
+</script>
+
+</body>
+</html>
+
+</body>
+</html>
